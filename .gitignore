@@ -28,3 +28,6 @@ archive.zip
 
 # macOS
 .DS_Store
+
+# sample outputs
+tests/sample_outputs/*
