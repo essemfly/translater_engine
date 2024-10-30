@@ -31,3 +31,6 @@ archive.zip
 
 # sample outputs
 tests/sample_outputs/*
+
+#env
+.env
