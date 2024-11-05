@@ -39,7 +39,6 @@ def main():
     #     textPart = block.layout.textAnchor.textSegments[0]
     #     print("***", block.layout.boundingPoly)
     #     print(pdf_doc.text[int(textPart.startIndex):int(textPart.endIndex)])
-    #     return
 
     # print('-----'* 10, len(pdf_doc.pages[0].paragraphs))
     # for paragraph in pdf_doc.pages[0].paragraphs:
