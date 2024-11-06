@@ -2,8 +2,8 @@ import json
 import os
 from datetime import datetime
 
-from core.modules.google_document import GoogleDocument
-from core.modules.load_pdf import load_pdf
+from app.modules.google_document import GoogleDocument
+from app.modules.load_pdf import load_pdf
 
 
 def main():
