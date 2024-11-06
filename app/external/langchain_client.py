@@ -37,12 +37,3 @@ def translate_text(from_lang: str, to_lang: str, text: str) -> str:
         {"from_lang": from_lang, "to_lang": to_lang, "text": text}
     )
     return response.strip()
-
-
-# 테스트 실행
-from_lang = "en"
-to_lang = "ko"
-text = "Hello, how are you?"
-
-translated_text = translate_text(from_lang, to_lang, text)
-print(f"Translated text: {translated_text}")

@@ -26,6 +26,7 @@ def replace_text_in_box(
         # 해당 영역의 기존 내용을 흰색 사각형으로 덮기
         page.draw_rect(box_rect, color=(1, 1, 1), fill=(1, 1, 1))
 
+        print("1a")
         # 새로운 텍스트 삽입
         rc = page.insert_text(
             point=(box_rect[0], box_rect[1]),  # 시작 위치
@@ -34,6 +35,7 @@ def replace_text_in_box(
             fontsize=font_size,
             color=text_color,
         )
+        print("2a")
         return True if rc else False
     except Exception as e:
         print(f"텍스트 교체 중 오류 발생: {e}")
