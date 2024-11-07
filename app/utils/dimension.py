@@ -66,3 +66,21 @@ def scale_coords_to_pdf_points(
         coords[2] * width_scale,
         coords[3] * height_scale,
     )
+
+
+def get_paragraph_text(pdf_metadata, paragraph):
+    textPart = paragraph.layout.textAnchor.textSegments[0]
+    return pdf_metadata.text[int(textPart.startIndex) : int(textPart.endIndex)]
+
+
+def get_rect_from_paragraph(pdf_metadata_dimension, pdf_dimension, paragraph):
+    normalized_vertices = paragraph.layout.boundingPoly
+    # 정규화된 좌표를 픽셀 좌표로 변환 -> 0.1 => 150
+    pixel_vertices = normalize_to_point_coords(
+        normalized_vertices, pdf_metadata_dimension.width, pdf_metadata_dimension.height
+    )
+    # 픽셀 좌표 리스트에서 (x0, y0, x1, y1) 값을 계산
+    rect_vertices = calculate_rect_from_coords(pixel_vertices)
+    # PDF 포인트 좌표로 변환
+    scale = pdf_dimension[0] / pdf_metadata_dimension.width
+    return [int(coord * scale) for coord in rect_vertices]
