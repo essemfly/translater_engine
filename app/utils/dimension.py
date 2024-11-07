@@ -1,5 +1,9 @@
 from typing import List, Tuple
 
+from app.modules.extract_text_style import (
+    convert_pdf_to_image,
+    extract_text_and_background_colors,
+)
 from app.modules.google_document import GoogleDocumentBoundingPoly
 
 
@@ -84,3 +88,30 @@ def get_rect_from_paragraph(pdf_metadata_dimension, pdf_dimension, paragraph):
     # PDF 포인트 좌표로 변환
     scale = pdf_dimension[0] / pdf_metadata_dimension.width
     return [int(coord * scale) for coord in rect_vertices]
+
+
+def get_rect(paragraph, pdf_metadata_dimension):
+    normalized_vertices = paragraph.layout.boundingPoly
+    # 정규화된 좌표를 픽셀 좌표로 변환 -> 0.1 => 150
+    pixel_vertices = normalize_to_point_coords(
+        normalized_vertices, pdf_metadata_dimension.width, pdf_metadata_dimension.height
+    )
+    # 픽셀 좌표 리스트에서 (x0, y0, x1, y1) 값을 계산
+    return calculate_rect_from_coords(pixel_vertices)
+
+
+def get_rect_style_from_paragraph(
+    pdf_path: str, page_num, paragraph, pdf_metadata_dimension
+):
+    img = convert_pdf_to_image(pdf_path, page_num)
+    print("Dimension: ", paragraph.layout.boundingPoly)
+
+    rect = get_rect(paragraph, pdf_metadata_dimension)
+    styles = extract_text_and_background_colors(img, rect)
+
+    result = {
+        "text_color": styles["text_color"],
+        "bg_color": styles["background_color"],
+    }
+
+    return result

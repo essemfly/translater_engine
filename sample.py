@@ -27,8 +27,7 @@ def main():
 
     os.makedirs(paths["output_dir"], exist_ok=True)
 
-    original_pdf_doc = load_pdf(paths["input_pdf"])
-    processed_pdf = process_pdf(original_pdf_doc, from_lang="en", to_lang="ko")
+    processed_pdf = process_pdf(paths["input_pdf"], from_lang="en", to_lang="ko")
     save_pdf(processed_pdf, paths["output_pdf"])
 
 

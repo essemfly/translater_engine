@@ -4,10 +4,12 @@ import json
 
 from app.external.langchain_client import translate_text
 from app.modules.google_document import GoogleDocument
+from app.modules.load_pdf import load_pdf
 from app.modules.translate_text import replace_text_in_box
 from app.utils.dimension import (
     get_paragraph_text,
     get_rect_from_paragraph,
+    get_rect_style_from_paragraph,
 )
 
 
@@ -20,7 +22,8 @@ def get_ocr_mock_data(documents_json_path):
     return documents_data
 
 
-def process_pdf(pdf: fitz.Document, from_lang: str = "en", to_lang: str = "ko"):
+def process_pdf(pdf_path: str, from_lang: str = "en", to_lang: str = "ko"):
+    pdf = load_pdf(pdf_path)
     documents_data = get_ocr_mock_data(
         "/Users/seokmin/Desktop/translater_engine/tests/sample_documents"
     )
@@ -40,7 +43,19 @@ def process_pdf(pdf: fitz.Document, from_lang: str = "en", to_lang: str = "ko"):
             rect = get_rect_from_paragraph(
                 pdf_metadata_dimension, pdf_dimension, paragraph
             )
-            new_pdf_doc = replace_text_in_box(pdf, page_number, rect, translatedText)
+            text_style = get_rect_style_from_paragraph(
+                pdf_path, page_number, paragraph, pdf_metadata_dimension
+            )
+
+            print("text style", text_style)
+            new_pdf_doc = replace_text_in_box(
+                pdf,
+                page_number,
+                rect,
+                translatedText,
+                text_color=text_style["text_color"],
+                bg_color=text_style["bg_color"],
+            )
 
         break
 
