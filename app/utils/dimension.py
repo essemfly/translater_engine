@@ -104,10 +104,10 @@ def get_rect_style_from_paragraph(
     pdf_path: str, page_num, paragraph, pdf_metadata_dimension
 ):
     img = convert_pdf_to_image(pdf_path, page_num)
-    print("Dimension: ", paragraph.layout.boundingPoly)
-
     rect = get_rect(paragraph, pdf_metadata_dimension)
+    print("RECTANGLE: ", rect)
     styles = extract_text_and_background_colors(img, rect)
+    print("STLYES", styles)
 
     result = {
         "text_color": styles["text_color"],

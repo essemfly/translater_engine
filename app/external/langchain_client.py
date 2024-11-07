@@ -6,7 +6,7 @@ import os
 
 load_dotenv()
 openai_api_key = os.getenv("OPENAI_API_KEY")
-llm = ChatOpenAI(model="gpt-4")
+llm = ChatOpenAI(model="gpt-4o-mini")
 prompt_template = """
 Translate the following text from {from_lang} to {to_lang}:
 
