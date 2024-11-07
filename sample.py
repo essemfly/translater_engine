@@ -15,7 +15,7 @@ def main():
         "tests",
     )
     paths = {
-        "input_pdf": os.path.join(base_dir, "sample_files", "1.pdf"),
+        "input_pdf": os.path.join(base_dir, "sample_files", "3.pdf"),
         "document_dir": os.path.join(base_dir, "sample_documents"),
         "output_dir": os.path.join(base_dir, "sample_outputs"),
         "output_pdf": os.path.join(

@@ -11,15 +11,8 @@ from app.utils.dimension import (
 )
 
 
-def get_ocr_mock_data(pdf: fitz.Document):
-    base_dir = os.path.join(
-        os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
-        "translater_engine",
-        "tests",
-    )
-    documents_json = os.path.join(
-        os.path.join(base_dir, "sample_documents"), "1_document.json"
-    )
+def get_ocr_mock_data(documents_json_path):
+    documents_json = os.path.join(documents_json_path, "3_document.json")
     documents_data = None
     with open(documents_json, "r") as json_file:  # Open the JSON file
         documents_data = json.load(json_file)
@@ -28,7 +21,9 @@ def get_ocr_mock_data(pdf: fitz.Document):
 
 
 def process_pdf(pdf: fitz.Document, from_lang: str = "en", to_lang: str = "ko"):
-    documents_data = get_ocr_mock_data(pdf)
+    documents_data = get_ocr_mock_data(
+        "/Users/seokmin/Desktop/translater_engine/tests/sample_documents"
+    )
     pdf_metadata: GoogleDocument = GoogleDocument.from_dict(documents_data)
 
     for page_number in range(len(pdf)):
@@ -38,9 +33,10 @@ def process_pdf(pdf: fitz.Document, from_lang: str = "en", to_lang: str = "ko"):
         pdf_dimension = [page.rect[2], page.rect[3]]
 
         pdf_metadata_paragraphs = pdf_metadata.pages[page_number].paragraphs
-        for paragraph in pdf_metadata_paragraphs:
+        for idx, paragraph in enumerate(pdf_metadata_paragraphs):
             text = get_paragraph_text(pdf_metadata, paragraph)
             translatedText = translate_text(from_lang, to_lang, text)
+            print("paragraph " + str(idx) + ": ", text, translatedText)
             rect = get_rect_from_paragraph(
                 pdf_metadata_dimension, pdf_dimension, paragraph
             )
