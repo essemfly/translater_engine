@@ -4,7 +4,7 @@ import json
 
 from app.external.langchain_client import translate_text
 from app.modules.google_document import GoogleDocument
-from app.modules.load_pdf import load_pdf
+from app.modules.load_pdf import load_pdf, load_pdf_all
 from app.modules.translate_text import (
     replace_text_in_box,
     replace_text_in_box_with_align,
@@ -17,7 +17,7 @@ from app.utils.dimension import (
 
 
 def get_ocr_mock_data(documents_json_path):
-    documents_json = os.path.join(documents_json_path, "1_document.json")
+    documents_json = os.path.join(documents_json_path, "3_document.json")
     documents_data = None
     with open(documents_json, "r") as json_file:  # Open the JSON file
         documents_data = json.load(json_file)
@@ -47,26 +47,26 @@ def process_pdf(pdf_path: str, from_lang: str = "en", to_lang: str = "ko"):
                 pdf_metadata_dimension, pdf_dimension, paragraph
             )
 
-            # text_style = get_rect_style_from_paragraph(
-            #     pdf_path, page_number, paragraph, pdf_metadata_dimension
-            # )
+            text_style = get_rect_style_from_paragraph(
+                pdf_path, page_number, paragraph, pdf_metadata_dimension
+            )
 
             # print("text style", text_style)
-            # new_pdf_doc = replace_text_in_box(
-            #     pdf,
-            #     page_number,
-            #     rect,
-            #     translatedText,
-            #     text_color=text_style["text_color"],
-            #     bg_color=text_style["bg_color"],
-            # )
-            new_pdf_doc = replace_text_in_box_with_align(
+            new_pdf_doc = replace_text_in_box(
                 pdf,
                 page_number,
                 rect,
                 translatedText,
-                align="center",
+                text_color=text_style["text_color"],
+                bg_color=text_style["bg_color"],
             )
+            # new_pdf_doc = replace_text_in_box_with_align(
+            #     pdf,
+            #     page_number,
+            #     rect,
+            #     translatedText,
+            #     align="left",
+            # )
 
         break
 

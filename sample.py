@@ -2,7 +2,7 @@ import os
 from datetime import datetime
 
 
-from app.modules.load_pdf import load_pdf
+from app.modules.load_pdf import load_pdf, load_pdf_all
 from app.modules.save_translated_pdf import save_pdf
 
 from app.modules.processor import process_pdf
@@ -26,9 +26,6 @@ def main():
     }
 
     os.makedirs(paths["output_dir"], exist_ok=True)
-
-    processed_pdf = process_pdf(paths["input_pdf"], from_lang="en", to_lang="ko")
-    save_pdf(processed_pdf, paths["output_pdf"])
 
 
 if __name__ == "__main__":

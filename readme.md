@@ -24,3 +24,20 @@ https://cloud.google.com/document-ai/docs/reference/rest/v1/Document
 #### Document AI response processor
 
 #### https://cloud.google.com/document-ai/docs/handle-response
+
+
+####
+
+1. Legal documents (경쟁사) - https://otranslator.com/ko/share/ASC9F4TH
+2. Patent (경쟁사) - https://otranslator.com/ko/share/BCSQFEI9
+3. Buesiness reports (경쟁사) - https://otranslator.com/ko/share/8OQIQ0CH
+4. Product manuals (경쟁사) - https://otranslator.com/ko/share/7A6CA2Q7
+5. Financial statements (경쟁사) - https://otranslator.com/ko/share/Q1V233G6
+6. Scientific papers (경쟁사) - https://otranslator.com/ko/share/6MJKIORB
+7. Text book (경쟁사) - https://otranslator.com/ko/share/BXDIKM6T
+8. Employee training documents (경쟁사) - https://otranslator.com/ko/share/D47ESWPL
+
+추가 검수 샘플
+1.  라면시장 경영보고서 (경쟁사) - https://otranslator.com/ko/share/FHCFVHWX
+2. 일본어 보고서 (경쟁사) - https://otranslator.com/ko/share/FBHFQNHI
+3. 한국 서비스 소개서 (경쟁사) - https://otranslator.com/ko/share/17M6FF6X
