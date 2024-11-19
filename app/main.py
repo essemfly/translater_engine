@@ -1,19 +1,5 @@
-import json
-import os
-from fastapi import APIRouter, FastAPI, Depends, HTTPException
+from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
-from openai import BaseModel
-
-from app.external.langchain_client import translate_text
-from app.modules.google_document import GoogleDocument
-from app.modules.load_pdf import load_pdf_all
-from app.modules.save_translated_pdf import save_pdf
-from app.modules.translate_text import replace_text_in_box
-from app.utils.dimension import (
-    get_paragraph_text,
-    get_rect_from_paragraph,
-)
-
 
 app = FastAPI(
     title="My FastAPI Application",

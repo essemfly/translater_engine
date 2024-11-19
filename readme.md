@@ -41,3 +41,7 @@ https://cloud.google.com/document-ai/docs/reference/rest/v1/Document
 1.  라면시장 경영보고서 (경쟁사) - https://otranslator.com/ko/share/FHCFVHWX
 2. 일본어 보고서 (경쟁사) - https://otranslator.com/ko/share/FBHFQNHI
 3. 한국 서비스 소개서 (경쟁사) - https://otranslator.com/ko/share/17M6FF6X
+
+
+## To run 
+#### uvicorn app.main:app --reload
