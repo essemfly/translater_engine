@@ -17,6 +17,7 @@ pdf_router = APIRouter()
 class PDFData(BaseModel):
     original_pdf: str
     ocr_result: str
+    translations: list[str] = []
     output_filename: str
 
 
@@ -26,6 +27,7 @@ async def api_process_pdf(data: PDFData):
     original_pdf = data.original_pdf
     ocr_result = data.ocr_result
     output_filename = data.output_filename
+    translations = data.translations
 
     output_path = os.path.join(
         os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
@@ -34,7 +36,9 @@ async def api_process_pdf(data: PDFData):
         output_filename,
     )
 
-    new_pdf = process_pdf_from_api(original_pdf, ocr_result)
+    new_pdf = process_pdf_from_api(
+        original_pdf, ocr_result, translatedTexts=translations
+    )
     print("New PDF created:", new_pdf)
 
     save_pdf(new_pdf, output_path)
@@ -53,7 +57,11 @@ async def api_process_pdf(data: PDFData):
 
 
 def process_pdf_from_api(
-    pdf_url: str, metadata: str, from_lang: str = "en", to_lang: str = "ko"
+    pdf_url: str,
+    metadata: str,
+    from_lang: str = "en",
+    to_lang: str = "ko",
+    translatedTexts: list[str] = [],
 ):
     pdf = load_pdf_all(url=pdf_url)
 
@@ -69,8 +77,7 @@ def process_pdf_from_api(
         pdf_metadata_paragraphs = pdf_metadata.pages[page_number].paragraphs
         for idx, paragraph in enumerate(pdf_metadata_paragraphs):
             text = get_paragraph_text(pdf_metadata, paragraph)
-            translatedText = translate_text(from_lang, to_lang, text)
-            print("paragraph " + str(idx) + ": ", text, translatedText)
+            print("paragraph " + str(idx) + ": ", text, translatedTexts[idx])
             rect = get_rect_from_paragraph(
                 pdf_metadata_dimension, pdf_dimension, paragraph
             )
@@ -79,7 +86,7 @@ def process_pdf_from_api(
                 pdf,
                 page_number,
                 rect,
-                translatedText,
+                translatedTexts[idx],
             )
         break
 
