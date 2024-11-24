@@ -18,7 +18,7 @@ pdf_router = APIRouter()
 class PDFData(BaseModel):
     original_pdf: str
     ocr_result: str
-    translations: list[str] = []
+    translations: list[list[str]] = []
     output_filename: str
 
 
@@ -40,7 +40,7 @@ async def api_process_pdf(data: PDFData):
 
     try:
         new_pdf = process_pdf_from_api(
-            original_pdf, ocr_result, translatedTexts=translations
+            original_pdf, ocr_result, translated_texts=translations
         )
         save_pdf(new_pdf, temp_path)
 
@@ -65,7 +65,7 @@ def process_pdf_from_api(
     metadata: str,
     from_lang: str = "en",
     to_lang: str = "ko",
-    translatedTexts: list[str] = [],
+    translated_texts: list[list[str]] = [],
 ):
     pdf = load_pdf_all(url=pdf_url)
     json_metadata = json.loads(metadata)
@@ -84,16 +84,13 @@ def process_pdf_from_api(
                 pdf_metadata_dimension, pdf_dimension, paragraph
             )
 
-            newText = translate_text(text, from_lang, to_lang)
-            print("paragraph " + str(idx) + ": ", text, newText)
+            # newText = translate_text(text, from_lang, to_lang)
+            print(
+                "paragraph " + str(idx) + ": ", text, translated_texts[page_number][idx]
+            )
 
             new_pdf_doc = replace_text_in_box(
-                pdf,
-                page_number,
-                rect,
-                # translatedTexts[idx],
-                newText,
+                pdf, page_number, rect, translated_texts[page_number][idx]
             )
-        break
 
     return new_pdf_doc
