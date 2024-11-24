@@ -78,18 +78,17 @@ def process_pdf_from_api(
 
         pdf_metadata_paragraphs = pdf_metadata.pages[page_number].paragraphs
         for idx, paragraph in enumerate(pdf_metadata_paragraphs):
-            text = get_paragraph_text(pdf_metadata, paragraph)
+            # text = get_paragraph_text(pdf_metadata, paragraph)
+            # print(
+            #     "paragraph " + str(idx) + ": ", text, translated_texts[page_number][idx]
+            # )
+
+            refined_text = translated_texts[page_number][idx].replace('\n', '')
             rect = get_rect_from_paragraph(
                 pdf_metadata_dimension, pdf_dimension, paragraph
             )
-
-            # newText = translate_text(text, from_lang, to_lang)
-            print(
-                "paragraph " + str(idx) + ": ", text, translated_texts[page_number][idx]
-            )
-
             new_pdf_doc = replace_text_in_box(
-                pdf, page_number, rect, translated_texts[page_number][idx]
+                pdf, page_number, rect, refined_text
             )
 
     return new_pdf_doc
