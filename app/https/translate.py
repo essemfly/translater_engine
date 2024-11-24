@@ -3,7 +3,6 @@ import os
 from fastapi import APIRouter, HTTPException
 from fastapi.responses import FileResponse
 from pydantic import BaseModel
-from app.external.langchain_client import translate_text
 from app.modules.google_document import GoogleDocument
 from app.modules.translate_text import replace_text_in_box
 from app.utils.dimension import get_paragraph_text, get_rect_from_paragraph
