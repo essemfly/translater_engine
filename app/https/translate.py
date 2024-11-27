@@ -23,15 +23,16 @@ class PDFData(BaseModel):
 
 
 class Paragraph(TypedDict):
-    pageNumber: int
-    boundingBox: List[float]  # [x0, y0, x1, y1]
+    pageNum: int
+    boundingBox: List[str]  # [x0, y0, x1, y1]
     translatedText: str
-    style: Dict[str, Any]
+    style: str
 
 
 class PDFDataV2(BaseModel):
     original_pdf: str
     paragraphs: List[Paragraph]
+    translations: list[list[str]] = []
     output_filename: str
 
 
@@ -113,6 +114,7 @@ async def api_process_pdf(data: PDFDataV2):
     original_pdf = data.original_pdf
     paragraphs = data.paragraphs
     output_filename = data.output_filename
+    translations = data.translations
 
     # 임시 디렉토리 생성
     temp_dir = tempfile.mkdtemp()
@@ -174,9 +176,9 @@ def process_pdf_paragraphs_from_api(
 
         # Process each paragraph
         for paragraph in paragraphs:
-            if paragraph.pageNumber != page_number:
+            if paragraph.pageNum != page_number:
                 continue
-            bounding = paragraph.bounding
+            bounding = paragraph.boundingBox
             translated_text = paragraph.translatedText
 
             # Convert bounding box coordinates if needed
