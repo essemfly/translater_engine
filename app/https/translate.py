@@ -32,7 +32,6 @@ class Paragraph(TypedDict):
 class PDFDataV2(BaseModel):
     original_pdf: str
     paragraphs: List[Paragraph]
-    translations: list[list[str]] = []
     output_filename: str
 
 
@@ -114,7 +113,6 @@ async def api_process_pdf(data: PDFDataV2):
     original_pdf = data.original_pdf
     paragraphs = data.paragraphs
     output_filename = data.output_filename
-    translations = data.translations
 
     # 임시 디렉토리 생성
     temp_dir = tempfile.mkdtemp()
@@ -166,27 +164,26 @@ def process_pdf_paragraphs_from_api(
     # Load PDF
     pdf = load_pdf_all(url=pdf_url)
 
-    for page_number in range(len(pdf)):
+    for page_number in range(1, len(pdf) + 1):
         if page_number > page_number_limit:
             break
 
         page = pdf[page_number]
         pdf_dimension = [page.rect[2], page.rect[3]]
-        print("PDF Dimension: ", pdf_dimension)
-
+        
         # Process each paragraph
         for paragraph in paragraphs:
-            if paragraph.pageNum != page_number:
+            if paragraph["pageNum"] != page_number:
                 continue
-            bounding = paragraph.boundingBox
-            translated_text = paragraph.translatedText
+            bounding = paragraph["boundingBox"]
+            translated_text = paragraph["translatedText"]
 
             # Convert bounding box coordinates if needed
             # This assumes the bounding coordinates are in the same scale as pdf_dimension
-            print("HOIT: ", bounding)
-            rect = bounding
+            rect = [float(value) for value in bounding]
 
             # Replace text in the PDF
             pdf = replace_text_in_box(pdf, page_number, rect, translated_text)
+        
 
     return pdf

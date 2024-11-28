@@ -32,7 +32,7 @@ def replace_text_in_box(
 
     try:
         font_path = "./fonts/NanumGothicCoding.ttf"
-        page = doc[page_number]
+        page = doc[page_number-1]
 
         # 배경 사각형 그리기
         page.draw_rect(box_rect, color=None, fill=bg_color)
@@ -73,6 +73,8 @@ def replace_text_in_box(
         # 줄 간격 계산 (폰트 크기의 1.2배)
         line_spacing = font_size * 1.2
 
+        print("Box rectangle: ", box_rect)
+        print("Lines: ", lines)
         # 각 줄 삽입
         for i, line in enumerate(lines):
             y_position = (
