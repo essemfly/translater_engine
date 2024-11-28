@@ -73,8 +73,8 @@ def replace_text_in_box(
         # 줄 간격 계산 (폰트 크기의 1.2배)
         line_spacing = font_size * 1.2
 
-        print("Box rectangle: ", box_rect)
-        print("Lines: ", lines)
+        # print("Box rectangle: ", box_rect)
+        # print("Lines: ", lines)
         # 각 줄 삽입
         for i, line in enumerate(lines):
             y_position = (
