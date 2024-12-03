@@ -6,6 +6,7 @@ from typing import List, TypedDict
 class Paragraph(TypedDict):
     pageNum: int
     boundingBox: List[str]  # [x0, y0, x1, y1]
+    originalText: str
     translatedText: str
     style: str
 
