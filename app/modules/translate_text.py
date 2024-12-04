@@ -32,7 +32,7 @@ def replace_text_in_box(
 
     try:
         font_path = "./fonts/NanumGothicCoding.ttf"
-        page = doc[page_number-1]
+        page = doc[page_number - 1]
 
         # 배경 사각형 그리기
         page.draw_rect(box_rect, color=None, fill=bg_color)
@@ -73,8 +73,6 @@ def replace_text_in_box(
         # 줄 간격 계산 (폰트 크기의 1.2배)
         line_spacing = font_size * 1.2
 
-        # print("Box rectangle: ", box_rect)
-        # print("Lines: ", lines)
         # 각 줄 삽입
         for i, line in enumerate(lines):
             y_position = (
@@ -141,7 +139,7 @@ def replace_text_in_box_with_align_old(
             )
 
         font_path = "./fonts/NanumGothicCoding.ttf"
-        page = doc[page_number-1]
+        page = doc[page_number - 1]
 
         # 박스 크기 계산
         box_width = box_rect[2] - box_rect[0]
@@ -184,7 +182,6 @@ def replace_text_in_box_with_align_old(
             fits = total_height <= box_height
             return fits, lines
 
-
         # 이진 탐색으로 적절한 폰트 크기 찾기
         left = min_font_size
         right = max_font_size
@@ -202,7 +199,6 @@ def replace_text_in_box_with_align_old(
                 left = mid + 0.5
             else:
                 right = mid - 0.5
-
 
         # 배경 사각형 그리기
         page.draw_rect(box_rect, color=None, fill=bg_color)
@@ -235,6 +231,7 @@ def replace_text_in_box_with_align_old(
         print(f"텍스트 교체 중 오류 발생: {e}")
         return None
 
+
 def replace_text_in_box_with_align(
     doc: fitz.Document,
     page_number: int,
@@ -255,10 +252,12 @@ def replace_text_in_box_with_align(
 
     try:
         if align not in ["left", "center", "right"]:
-            raise ValueError("align 매개변수는 'left', 'center', 'right' 중 하나여야 합니다.")
+            raise ValueError(
+                "align 매개변수는 'left', 'center', 'right' 중 하나여야 합니다."
+            )
 
         font_path = "./fonts/NanumGothicCoding.ttf"
-        page = doc[page_number-1]
+        page = doc[page_number - 1]
 
         box_width = box_rect[2] - box_rect[0]
         box_height = box_rect[3] - box_rect[1]
@@ -325,7 +324,7 @@ def replace_text_in_box_with_align(
         while (right - left) > EPSILON:
             mid = (left + right) / 2
             fits, lines = try_text_fitting(mid)
-            
+
             if fits:
                 optimal_font_size = mid
                 optimal_lines = lines
@@ -346,7 +345,7 @@ def replace_text_in_box_with_align(
         for i, (line, line_width) in enumerate(optimal_lines):
             # 실제 라인 너비 재계산
             actual_width = font.text_length(line, fontsize=optimal_font_size)
-            
+
             if align == "left":
                 x_position = box_rect[0]
             elif align == "center":
@@ -370,7 +369,7 @@ def replace_text_in_box_with_align(
     except Exception as e:
         print(f"텍스트 교체 중 오류 발생: {e}")
         return None
-    
+
 
 def replace_text_in_box_single_line(
     doc: fitz.Document,
@@ -392,10 +391,12 @@ def replace_text_in_box_single_line(
 
     try:
         if align not in ["left", "center", "right"]:
-            raise ValueError("align 매개변수는 'left', 'center', 'right' 중 하나여야 합니다.")
+            raise ValueError(
+                "align 매개변수는 'left', 'center', 'right' 중 하나여야 합니다."
+            )
 
         font_path = "./fonts/NanumGothicCoding.ttf"
-        page = doc[page_number-1]
+        page = doc[page_number - 1]
 
         box_width = box_rect[2] - box_rect[0]
         box_height = box_rect[3] - box_rect[1]
@@ -433,7 +434,7 @@ def replace_text_in_box_single_line(
         # 텍스트 정렬 및 삽입
         font = fitz.Font(fontfile=font_path)
         text_width = font.text_length(new_text, fontsize=optimal_font_size)
-        
+
         # 가로 정렬 위치 계산
         if align == "left":
             x_position = box_rect[0]

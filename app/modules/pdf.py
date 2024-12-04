@@ -74,7 +74,7 @@ def process_pdf_paragraphs_from_api(
 
             print(f"Processing : ", fontSize, font_name, color, translated_text)
             # Replace text in the PDF
-            pdf = replace_text_in_box_single_line(
+            pdf = replace_text_in_box_with_align(
                 pdf,
                 page_number,
                 rect,
