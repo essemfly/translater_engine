@@ -1,5 +1,6 @@
+import json
 from app.modules.load_pdf import load_pdf_all
-from app.modules.translate_text import replace_text_in_box
+from app.modules.translate_text import replace_text_in_box, replace_text_in_box_single_line, replace_text_in_box_with_align
 from typing import List, TypedDict
 
 
@@ -48,12 +49,40 @@ def process_pdf_paragraphs_from_api(
                 continue
             bounding = paragraph["boundingBox"]
             translated_text = paragraph["translatedText"]
+            font_properties = json.loads(paragraph["style"])
+            fontSize = font_properties["fontSize"]
+            color = font_properties["color"]
+            bgColor = font_properties["bgColor"]
+            font = font_properties["font"]
+            isBold = font_properties["isBold"]
+            isItalic = font_properties["isItalic"]
+
+            color = [c / 255.0 for c in color]  # 0-255 범위를 0-1 범위로 변환
+            bgColor = [c / 255.0 for c in bgColor]
+
+            # 폰트 이름 조정
+            if isBold:
+                font_name = font + "-Bold"  # Bold 폰트 이름 조정
+            else:
+                font_name = font
+
+            if isItalic:
+                font_name += "-Italic"  # Italic 폰트 이름 조정
 
             # Convert bounding box coordinates if needed
-            # This assumes the bounding coordinates are in the same scale as pdf_dimension
             rect = [float(value) for value in bounding]
 
+            print(f"Processing : ", fontSize, font_name, color, translated_text)
             # Replace text in the PDF
-            pdf = replace_text_in_box(pdf, page_number, rect, translated_text)
+            pdf = replace_text_in_box_single_line(
+                pdf,
+                page_number,
+                rect,
+                translated_text,
+                fontSize,
+                font_name,
+                color,
+                bgColor,
+            )
 
     return pdf

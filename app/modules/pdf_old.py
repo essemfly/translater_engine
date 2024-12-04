@@ -20,9 +20,7 @@ def process_pdf_from_api(
         page = pdf[page_number]
 
         pdf_metadata_dimension = pdf_metadata.pages[page_number].dimension
-        print("pdf_metadata_dimension: ", pdf_metadata_dimension)
         pdf_dimension = [page.rect[2], page.rect[3]]
-        print("pdf_dimension: ", pdf_dimension)
 
         pdf_metadata_paragraphs = pdf_metadata.pages[page_number].paragraphs
         for idx, paragraph in enumerate(pdf_metadata_paragraphs):
