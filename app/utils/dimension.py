@@ -63,7 +63,6 @@ def scale_coords_to_pdf_points(
     width_scale = target_width / source_width
     height_scale = target_height / source_height
 
-    print("coords", coords)
     return (
         coords[0] * width_scale,
         coords[1] * height_scale,
@@ -105,9 +104,7 @@ def get_rect_style_from_paragraph(
 ):
     img = convert_pdf_to_image(pdf_path, page_num)
     rect = get_rect(paragraph, pdf_metadata_dimension)
-    print("RECTANGLE: ", rect)
     styles = extract_text_and_background_colors(img, rect)
-    print("STLYES", styles)
 
     result = {
         "text_color": styles["text_color"],
