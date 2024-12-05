@@ -385,7 +385,7 @@ def replace_text_in_box_single_line(
     """PDF 페이지의 특정 영역의 텍스트를 한 줄로 새로운 텍스트로 교체하고 변경된 PDF 반환
     텍스트 크기를 자동으로 조절하여 박스에 맞춤, 가로 정렬 및 세로 중앙 정렬 지원
     """
-    MIN_FONT_SIZE = 4
+    MIN_FONT_SIZE = 0
     MAX_FONT_SIZE = 200
     EPSILON = 0.1
 

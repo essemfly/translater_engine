@@ -44,18 +44,18 @@ def process_pdf_paragraphs_from_api(
 
         # Process each paragraph
         for paragraph in paragraphs:
-
             if paragraph["pageNum"] != page_number:
                 continue
             bounding = paragraph["boundingBox"]
             translated_text = paragraph["translatedText"]
             font_properties = json.loads(paragraph["style"])
-            fontSize = font_properties["fontSize"]
-            color = font_properties["color"]
-            bgColor = font_properties["bgColor"]
-            font = font_properties["font"]
-            isBold = font_properties["isBold"]
-            isItalic = font_properties["isItalic"]
+
+            fontSize = font_properties.get("fontSize", 11)
+            color = font_properties.get("color", [0, 0, 0])  # Default to black in RGB
+            bgColor = font_properties.get("bgColor", [255, 255, 255])  # Default to white in RGB
+            font = font_properties.get("font", "Helvetica")  # Assuming Helvetica as default font
+            isBold = font_properties.get("isBold", False)
+            isItalic = font_properties.get("isItalic", False)
 
             color = [c / 255.0 for c in color]  # 0-255 범위를 0-1 범위로 변환
             bgColor = [c / 255.0 for c in bgColor]
@@ -72,9 +72,9 @@ def process_pdf_paragraphs_from_api(
             # Convert bounding box coordinates if needed
             rect = [float(value) for value in bounding]
 
-            print(f"Processing : ", fontSize, font_name, color, translated_text)
+            print(f"Processing : ", fontSize, font_name, color, translated_text, rect)
             # Replace text in the PDF
-            pdf = replace_text_in_box_with_align(
+            pdf = replace_text_in_box_single_line(
                 pdf,
                 page_number,
                 rect,
@@ -82,7 +82,7 @@ def process_pdf_paragraphs_from_api(
                 fontSize,
                 font_name,
                 color,
-                bgColor,
+                [1.0,1.0,1.0],
             )
 
     return pdf
