@@ -1,6 +1,10 @@
 import json
 from app.modules.load_pdf import load_pdf_all
-from app.modules.translate_text import replace_text_in_box, replace_text_in_box_single_line, replace_text_in_box_with_align
+from app.modules.translate_text import (
+    replace_text_in_box,
+    replace_text_in_box_single_line,
+    replace_text_in_box_with_align,
+)
 from typing import List, TypedDict
 
 
@@ -51,14 +55,19 @@ def process_pdf_paragraphs_from_api(
             font_properties = json.loads(paragraph["style"])
 
             fontSize = font_properties.get("fontSize", 11)
-            color = font_properties.get("color", [0, 0, 0])  # Default to black in RGB
-            bgColor = font_properties.get("bgColor", [255, 255, 255])  # Default to white in RGB
-            font = font_properties.get("font", "Helvetica")  # Assuming Helvetica as default font
+            color = font_properties.get("color", [0, 0, 0])
+            bgColor = font_properties.get(
+                "bgColor", [255, 255, 255]
+            )
+            font = font_properties.get(
+                "font", "Helvetica"
+            )  # Assuming Helvetica as default font
             isBold = font_properties.get("isBold", False)
             isItalic = font_properties.get("isItalic", False)
 
-            color = [c / 255.0 for c in color]  # 0-255 범위를 0-1 범위로 변환
-            bgColor = [c / 255.0 for c in bgColor]
+            # 딕셔너리 값들을 순서대로 리스트로 변환
+            color = [float(color[str(i)]) / 255.0 for i in range(3)]
+            bgColor = [float(bgColor[str(i)]) / 255.0 for i in range(3)]
 
             # 폰트 이름 조정
             if isBold:
@@ -82,7 +91,7 @@ def process_pdf_paragraphs_from_api(
                 fontSize,
                 font_name,
                 color,
-                [1.0,1.0,1.0],
+                bgColor,
             )
 
     return pdf
