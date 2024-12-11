@@ -66,8 +66,8 @@ def process_pdf_paragraphs_from_api(
             isItalic = font_properties.get("isItalic", False)
 
             # 딕셔너리 값들을 순서대로 리스트로 변환
-            color = [float(color[str(i)]) / 255.0 for i in range(3)]
-            bgColor = [float(bgColor[str(i)]) / 255.0 for i in range(3)]
+            color = [float(val) / 255.0 for val in color]
+            bgColor = [float(val) / 255.0 for val in bgColor]
 
             # 폰트 이름 조정
             if isBold:
