@@ -331,6 +331,8 @@ def replace_text_in_box_with_align(
                 left = mid
             else:
                 right = mid
+        
+        optimal_font_size *= 0.95
 
         if not optimal_lines:  # 적절한 크기를 찾지 못한 경우
             raise ValueError("텍스트를 박스에 맞출 수 없습니다.")
@@ -387,7 +389,7 @@ def replace_text_in_box_single_line(
     """
     MIN_FONT_SIZE = 0
     MAX_FONT_SIZE = 200
-    EPSILON = 0.1
+    EPSILON = 0.5
 
     try:
         if align not in ["left", "center", "right"]:
