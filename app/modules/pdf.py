@@ -1,9 +1,7 @@
 import json
 from app.modules.load_pdf import load_pdf_all
 from app.modules.translate_text import (
-    replace_text_in_box,
     replace_text_in_box_single_line,
-    replace_text_in_box_with_align,
 )
 from typing import List, TypedDict
 
