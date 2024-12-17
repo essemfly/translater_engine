@@ -19,7 +19,7 @@ def process_pdf_paragraphs_from_api(
     paragraphs: List[Paragraph],
     from_lang: str = "en",
     to_lang: str = "ko",
-    page_number_limit: int = 15,
+    page_number_limit: int = 1,
 ):
     """
     Process PDF with given paragraphs and translations
