@@ -1,9 +1,7 @@
 import json
 from app.modules.load_pdf import load_pdf_all
 from app.modules.translate_text import (
-    replace_text_in_box,
     replace_text_in_box_single_line,
-    replace_text_in_box_with_align,
 )
 from typing import List, TypedDict
 
@@ -19,23 +17,8 @@ class Paragraph(TypedDict):
 def process_pdf_paragraphs_from_api(
     pdf_url: str,
     paragraphs: List[Paragraph],
-    from_lang: str = "en",
-    to_lang: str = "ko",
     page_number_limit: int = 15,
 ):
-    """
-    Process PDF with given paragraphs and translations
-
-    Args:
-        pdf_url (str): URL of the PDF to process
-        paragraphs (List[Paragraph]): List of paragraphs with bounding boxes and translations
-        from_lang (str, optional): Source language. Defaults to "en"
-        to_lang (str, optional): Target language. Defaults to "ko"
-        page_number (int, optional): Page number to process. Defaults to 1
-
-    Returns:
-        PDF document with replaced text
-    """
     # Load PDF
     pdf = load_pdf_all(url=pdf_url)
 
@@ -43,13 +26,8 @@ def process_pdf_paragraphs_from_api(
         if page_number > page_number_limit:
             break
 
-        page = pdf[page_number - 1]
-        pdf_dimension = [page.rect[2], page.rect[3]]
-
         # Process each paragraph
         for paragraph in paragraphs:
-            if paragraph["pageNum"] != page_number:
-                continue
             bounding = paragraph["boundingBox"]
             translated_text = paragraph["translatedText"]
             font_properties = json.loads(paragraph["style"])
