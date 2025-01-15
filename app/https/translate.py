@@ -68,6 +68,7 @@ async def api_process_pdf(data: PDFDataV2):
     original_pdf = data.original_pdf
     paragraphs = data.paragraphs
     output_filename = data.output_filename
+    page_number_limit = data.page_number_limit
 
     # 임시 디렉토리 생성
     temp_dir = tempfile.mkdtemp()
@@ -77,6 +78,7 @@ async def api_process_pdf(data: PDFDataV2):
         new_pdf = process_pdf_paragraphs_from_api(
             original_pdf,
             paragraphs,
+            page_number_limit,
         )
         save_pdf(new_pdf, temp_path)
 
