@@ -68,7 +68,7 @@ async def api_process_pdf(data: PDFDataV2):
     original_pdf = data.original_pdf
     paragraphs = data.paragraphs
     output_filename = data.output_filename
-    page_number_limit = data.page_number_limit
+    page_number_limit = data.get("page_number_limit", 15)
 
     # 임시 디렉토리 생성
     temp_dir = tempfile.mkdtemp()
