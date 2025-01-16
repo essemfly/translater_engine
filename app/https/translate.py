@@ -1,5 +1,5 @@
 import os
-from typing import List, TypedDict
+from typing import List, Optional, TypedDict
 from fastapi import APIRouter, HTTPException
 from fastapi.responses import FileResponse
 from pydantic import BaseModel
@@ -23,6 +23,8 @@ class PDFDataV2(BaseModel):
     original_pdf: str
     paragraphs: List[Paragraph]
     output_filename: str
+    page_number_limit: Optional[int] = 15  # 기본값 설정
+
 
 
 # @pdf_router.post("/process_pdf")
@@ -68,7 +70,7 @@ async def api_process_pdf(data: PDFDataV2):
     original_pdf = data.original_pdf
     paragraphs = data.paragraphs
     output_filename = data.output_filename
-    page_number_limit = data.get("page_number_limit", 15)
+    page_number_limit = data.page_number_limit
 
     # 임시 디렉토리 생성
     temp_dir = tempfile.mkdtemp()
