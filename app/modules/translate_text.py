@@ -397,7 +397,10 @@ def replace_text_in_box_single_line(
                 "align 매개변수는 'left', 'center', 'right' 중 하나여야 합니다."
             )
 
-        font_path = "./fonts/NanumGothicCoding.ttf"
+        font_path = "./fonts/KoPubWorld Dotum_Pro_Medium.otf"
+        if "Bold" in font_name:
+            font_path = "./fonts/KoPubWorld Dotum_Pro_Bold.otf"
+        
         page = doc[page_number - 1]
 
         box_width = box_rect[2] - box_rect[0]
