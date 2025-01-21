@@ -28,6 +28,8 @@ def process_pdf_paragraphs_from_api(
 
         # Process each paragraph
         for paragraph in paragraphs:
+            if paragraph["pageNum"] != page_number:
+                continue
             bounding = paragraph["boundingBox"]
             translated_text = paragraph["translatedText"]
             font_properties = json.loads(paragraph["style"])
@@ -58,8 +60,6 @@ def process_pdf_paragraphs_from_api(
 
             # Convert bounding box coordinates if needed
             rect = [float(value) for value in bounding]
-
-            print(f"Processing : ", fontSize, font_name, color, translated_text, rect)
             # Replace text in the PDF
             pdf = replace_text_in_box_single_line(
                 pdf,
